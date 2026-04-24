@@ -1,0 +1,35 @@
+{
+  "tenant_id": "clinica-san-pablo",
+  "documents": [
+    {
+      "doc_id": "faq-horarios",
+      "title": "Horarios de atencion",
+      "body": "La clinica atiende de lunes a viernes de 9 a 18 hs. Los sabados atendemos de 9 a 13 hs. Domingos y feriados nacionales permanecemos cerrados. Consultas de urgencia fuera de horario pueden ser dirigidas a nuestra guardia asociada en el Hospital Privado."
+    },
+    {
+      "doc_id": "faq-turnos",
+      "title": "Como reservar un turno",
+      "body": "Podes reservar turnos de tres formas: (1) por nuestro sitio web www.clinicasanpablo.com completando el formulario con DNI y especialidad, (2) por WhatsApp al +54 9 351 XXX XXXX enviando tu DNI y la fecha preferida, o (3) presencialmente en recepcion. Te confirmamos el turno dentro de las 4 horas habiles."
+    },
+    {
+      "doc_id": "faq-cancelacion",
+      "title": "Cancelacion de turnos",
+      "body": "Para cancelar un turno, escribi CANCELAR seguido de tu DNI al WhatsApp de la clinica. Cancelaciones con mas de 24 horas de anticipacion no tienen costo. Cancelaciones con menos de 24 horas tienen un cargo administrativo equivalente al 30% del valor de la consulta."
+    },
+    {
+      "doc_id": "faq-aranceles",
+      "title": "Aranceles y obras sociales",
+      "body": "Trabajamos con OSDE, Galeno, Swiss Medical, Medife y PAMI. Las consultas particulares tienen arancel diferenciado segun especialidad. Ginecologia y pediatria son las mas solicitadas y tienen tarifa reducida los primeros sabados de cada mes."
+    },
+    {
+      "doc_id": "faq-estudios",
+      "title": "Estudios y practicas",
+      "body": "Ofrecemos laboratorio con extracciones todos los dias, ecografia (incluyendo ginecologica y obstetrica), electrocardiograma, holter, y radiologia general. Los resultados de laboratorio se entregan en 24 a 48 horas por correo electronico. Ecografias y estudios cardiologicos se interpretan el mismo dia."
+    },
+    {
+      "doc_id": "faq-especialidades",
+      "title": "Especialidades medicas",
+      "body": "Contamos con medicina general, pediatria, ginecologia, cardiologia, dermatologia, endocrinologia, neurologia, traumatologia, nutricion, salud mental (psicologia y psiquiatria) y odontologia general. Los especialistas rotan en distintos dias de la semana segun disponibilidad."
+    }
+  ]
+}
