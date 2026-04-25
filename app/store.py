@@ -2,8 +2,8 @@
 
 Two implementations share a Protocol:
 
-* `InMemoryStore` — list of chunks + cosine search. CI-friendly.
-* `PgvectorStore` — Postgres + pgvector extension. Real production target.
+* `InMemoryStore` -- list of chunks + cosine search. CI-friendly.
+* `PgvectorStore` -- Postgres + pgvector extension. Real production target.
 
 The pgvector impl expects a table like:
 

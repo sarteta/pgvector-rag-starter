@@ -4,36 +4,28 @@
 [![python](https://img.shields.io/badge/python-3.11%20%7C%203.12%20%7C%203.13-blue)](https://www.python.org)
 [![license](https://img.shields.io/badge/license-MIT-green)](./LICENSE)
 
-A tiny, honest RAG reference implementation in FastAPI + Python. Drop-in
-Postgres/pgvector schema with Row-Level Security for multi-tenant apps.
-Ships with a deterministic pseudo-embedding provider so the full
-pipeline runs in CI and on a laptop with no API keys.
+RAG reference implementation in FastAPI + Python with a Postgres + pgvector schema using Row-Level Security for multi-tenant apps. Ships with a deterministic pseudo-embedding provider so the full pipeline runs in CI and on a laptop with no API keys.
 
 ![demo](./examples/demo.png)
 
-## What this is
+```mermaid
+flowchart LR
+    Doc[document] -->|/ingest| CH[chunker]
+    CH --> EMB[embedder<br/>Deterministic / OpenAI]
+    EMB --> ST[(VectorStore<br/>InMemory / pgvector + RLS)]
+    Q[query] -->|/query| EQ[embed query]
+    EQ --> SR[cosine search<br/>tenant-scoped]
+    ST --> SR
+    SR --> H[HitOut JSON]
+```
 
-- A **working reference**, not a library. Clone it, rip out the parts
-  you don't want, plug in your real embedding + vector-store providers.
-- **Multi-tenant by default.** Tenant id travels through the pipeline
-  and the included Postgres schema enables RLS so a bug in the
-  application layer can't accidentally leak tenant A's documents to
-  tenant B.
-- **Testable end-to-end without external services.** The
-  `DeterministicEmbedding` provider produces stable (not semantic)
-  vectors from SHA-256, so ingest/search/API tests pass in plain CI.
-  For real retrieval quality, set `EMBEDDING_PROVIDER=openai`.
+## Scope
 
-## What this is NOT
+- A working reference, not a library. Clone it, swap the parts that need swapping (embedding provider, vector store), use it.
+- Multi-tenant by default. Tenant id travels through the pipeline and the included Postgres schema enables RLS so a bug in the application layer cannot leak tenant A documents to tenant B.
+- Testable end-to-end without external services. The `DeterministicEmbedding` provider produces stable (not semantic) vectors from SHA-256, so ingest/search/API tests pass in plain CI. For real retrieval quality, set `EMBEDDING_PROVIDER=openai`.
 
-- A production RAG framework. No reranking, no query rewriting, no
-  semantic chunking, no hybrid BM25+dense search, no evals. When
-  retrieval quality matters for your app, pair it with
-  [`whatsapp-rag-eval-kit`](https://github.com/sarteta/whatsapp-rag-eval-kit)
-  to measure it honestly.
-- Opinionated about the LLM side. The `/query` endpoint returns hits;
-  passing those hits to Claude/GPT and getting an answer is your job,
-  because every app wants that prompt template to be different.
+The `/query` endpoint returns hits. Passing those to an LLM and getting an answer is left out on purpose: every app wants a different prompt template. For retrieval-quality measurement, pair this with [`whatsapp-rag-eval-kit`](https://github.com/sarteta/whatsapp-rag-eval-kit).
 
 ## Quickstart
 
@@ -112,10 +104,7 @@ CREATE POLICY chunks_tenant_isolation ON chunks
   USING (tenant_id = current_setting('app.tenant_id', true));
 ```
 
-Your application code sets `SET LOCAL app.tenant_id = ...` at the start
-of every request's transaction, and **never** interpolates the tenant
-id into SQL directly. That's the contract: a bug in the retrieval
-handler becomes a `zero rows returned` — not a cross-tenant leak.
+Application code sets `SET LOCAL app.tenant_id = ...` at the start of every request's transaction, and never interpolates the tenant id into SQL directly. That contract makes a bug in the retrieval handler return zero rows instead of leaking across tenants.
 
 ## Tests (19)
 

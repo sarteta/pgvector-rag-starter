@@ -1,4 +1,4 @@
-"""High-level RAG pipeline — ingest + query."""
+"""High-level RAG pipeline -- ingest + query."""
 from __future__ import annotations
 
 from dataclasses import dataclass

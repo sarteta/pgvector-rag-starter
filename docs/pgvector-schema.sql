@@ -18,7 +18,7 @@ CREATE TABLE IF NOT EXISTS chunks (
 CREATE INDEX IF NOT EXISTS chunks_embedding_idx
   ON chunks USING hnsw (embedding vector_cosine_ops);
 
--- Secondary index on tenant filter — search path is always tenant-first.
+-- Secondary index on tenant filter -- search path is always tenant-first.
 CREATE INDEX IF NOT EXISTS chunks_tenant_idx ON chunks (tenant_id);
 
 -- Row-Level Security.
@@ -42,4 +42,4 @@ CREATE POLICY IF NOT EXISTS chunks_tenant_isolation ON chunks
 --
 -- The `SET LOCAL` is committed for the duration of the transaction and
 -- reset at commit/rollback. Never construct the SQL by string-formatting
--- the tenant id — use SET LOCAL with a parameter.
+-- the tenant id -- use SET LOCAL with a parameter.

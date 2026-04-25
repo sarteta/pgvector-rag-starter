@@ -2,13 +2,13 @@
 
 Ships with two implementations:
 
-* `DeterministicEmbedding` — hash-based pseudo-embedding. Produces a
+* `DeterministicEmbedding` -- hash-based pseudo-embedding. Produces a
   stable 384-dim vector per input. **NOT semantically meaningful.**
   It exists so the full pipeline (ingest -> store -> search -> serve)
   runs in CI without an OpenAI/Anthropic/Voyage account. Same-input
   vectors are equal, so exact lookup works. That's all.
 
-* `OpenAIEmbedding` — real embeddings via `text-embedding-3-small`.
+* `OpenAIEmbedding` -- real embeddings via `text-embedding-3-small`.
   Turn it on with `EMBEDDING_PROVIDER=openai` + `OPENAI_API_KEY` in
   `.env`. Returns 1536-dim vectors.
 
@@ -30,7 +30,7 @@ class EmbeddingProvider(Protocol):
 
 
 class DeterministicEmbedding:
-    """Pseudo-embedding for CI and offline dev. Not semantic — just stable."""
+    """Pseudo-embedding for CI and offline dev. Not semantic -- just stable."""
 
     dim = 384
 
