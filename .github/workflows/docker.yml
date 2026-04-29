@@ -1,0 +1,29 @@
+name: docker
+on:
+  push:
+    branches: [main]
+  pull_request:
+  workflow_dispatch:
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Build image
+        run: docker build -t pgvector-rag-starter:ci .
+      - name: Show image size
+        run: docker images pgvector-rag-starter:ci
+      - name: Smoke test (boot API, hit /health)
+        run: |
+          docker run -d --name rag -p 8000:8000 pgvector-rag-starter:ci
+          for i in 1 2 3 4 5 6 7 8 9 10; do
+            if curl -fsS http://localhost:8000/docs > /dev/null; then
+              echo "API is up"
+              exit 0
+            fi
+            sleep 1
+          done
+          echo "API failed to come up"
+          docker logs rag
+          exit 1
